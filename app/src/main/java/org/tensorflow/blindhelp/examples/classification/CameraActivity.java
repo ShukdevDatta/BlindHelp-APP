@@ -341,9 +341,9 @@ public abstract class CameraActivity extends AppCompatActivity
     handlerThread.start();
     handler = new Handler(handlerThread.getLooper());
 
-    mp = MediaPlayer.create(this, R.raw.hun);
-    mp1 = MediaPlayer.create(this, R.raw.ten);
-    mp2 = MediaPlayer.create(this, R.raw.five);
+    mp = MediaPlayer.create(this, R.raw.hundred);
+    mp1 = MediaPlayer.create(this, R.raw.fivehundred);
+    mp2 = MediaPlayer.create(this, R.raw.thousand);
 
  /*   mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
       @Override
