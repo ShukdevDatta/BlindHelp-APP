@@ -576,7 +576,7 @@ boolean hundred = false;
             hundred = true;
             fivehundred =false;
             thousand = false;
-          } else if (!thousand&&recognitionTextView.getText().toString().equalsIgnoreCase("BDT1000")&& confi>90 ) {
+          } else if (!thousand&&recognitionTextView.getText().toString().equalsIgnoreCase("BDT1000")&& confi>99 ) {
             mp2.start();
             thousand  =true;
             fivehundred =false;
