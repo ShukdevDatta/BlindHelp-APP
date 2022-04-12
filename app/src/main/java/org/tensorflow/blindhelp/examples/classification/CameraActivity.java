@@ -548,6 +548,9 @@ public abstract class CameraActivity extends AppCompatActivity
         return 0;
     }
   }
+
+
+//  Change to be made here
 boolean hun = false;
   boolean five = false;
   boolean ten = false;
