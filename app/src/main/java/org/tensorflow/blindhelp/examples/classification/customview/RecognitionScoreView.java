@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package org.tensorflow.lite.examples.classification.customview;
+package org.tensorflow.blindhelp.examples.classification.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -22,14 +22,15 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import java.util.List;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Recognition;
+
+import org.tensorflow.blindhelp.examples.classification.tflite.Classifier;
 
 public class RecognitionScoreView extends View implements ResultsView {
   private static final float TEXT_SIZE_DIP = 16;
   private final float textSizePx;
   private final Paint fgPaint;
   private final Paint bgPaint;
-  private List<Recognition> results;
+  private List<Classifier.Recognition> results;
 
   public RecognitionScoreView(final Context context, final AttributeSet set) {
     super(context, set);
@@ -45,7 +46,7 @@ public class RecognitionScoreView extends View implements ResultsView {
   }
 
   @Override
-  public void setResults(final List<Recognition> results) {
+  public void setResults(final List<Classifier.Recognition> results) {
     this.results = results;
     postInvalidate();
   }
@@ -58,7 +59,7 @@ public class RecognitionScoreView extends View implements ResultsView {
     canvas.drawPaint(bgPaint);
 
     if (results != null) {
-      for (final Recognition recog : results) {
+      for (final Classifier.Recognition recog : results) {
         canvas.drawText(recog.getTitle() + ": " + recog.getConfidence(), x, y, fgPaint);
         y += (int) (fgPaint.getTextSize() * 1.5f);
       }

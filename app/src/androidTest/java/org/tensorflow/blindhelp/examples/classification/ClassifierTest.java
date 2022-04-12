@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package org.tensorflow.blindhelp.examples.classification;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -35,10 +35,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.tensorflow.lite.examples.classification.tflite.Classifier;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Recognition;
+import org.tensorflow.blindhelp.examples.classification.tflite.Classifier;
 
 /** Golden test for Image Classification Reference app. */
 @RunWith(AndroidJUnit4.class)
@@ -54,19 +51,19 @@ public class ClassifierTest {
   @Test
   public void classificationResultsShouldNotChange() throws IOException {
     ClassifierActivity activity = rule.getActivity();
-    Classifier classifier = Classifier.create(activity, Model.FLOAT, Device.CPU, 1);
+    Classifier classifier = Classifier.create(activity, Classifier.Model.FLOAT, Classifier.Device.CPU, 1);
     for (int i = 0; i < INPUTS.length; i++) {
       String imageFileName = INPUTS[i];
       String goldenOutputFileName = GOLDEN_OUTPUTS[i];
       Bitmap input = loadImage(imageFileName);
-      List<Recognition> goldenOutput = loadRecognitions(goldenOutputFileName);
+      List<Classifier.Recognition> goldenOutput = loadRecognitions(goldenOutputFileName);
 
-      List<Recognition> result = classifier.recognizeImage(input, 0);
-      Iterator<Recognition> goldenOutputIterator = goldenOutput.iterator();
+      List<Classifier.Recognition> result = classifier.recognizeImage(input, 0);
+      Iterator<Classifier.Recognition> goldenOutputIterator = goldenOutput.iterator();
 
-      for (Recognition actual : result) {
+      for (Classifier.Recognition actual : result) {
         Assert.assertTrue(goldenOutputIterator.hasNext());
-        Recognition expected = goldenOutputIterator.next();
+        Classifier.Recognition expected = goldenOutputIterator.next();
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
         assertThat(actual.getConfidence()).isWithin(0.01f).of(expected.getConfidence());
       }
@@ -85,7 +82,7 @@ public class ClassifierTest {
     return BitmapFactory.decodeStream(inputStream);
   }
 
-  private static List<Recognition> loadRecognitions(String fileName) {
+  private static List<Classifier.Recognition> loadRecognitions(String fileName) {
     AssetManager assetManager =
         InstrumentationRegistry.getInstrumentation().getContext().getAssets();
     InputStream inputStream = null;
@@ -95,7 +92,7 @@ public class ClassifierTest {
       Log.e("Test", "Cannot load probability results from assets");
     }
     Scanner scanner = new Scanner(inputStream);
-    List<Recognition> result = new ArrayList<>();
+    List<Classifier.Recognition> result = new ArrayList<>();
     while (scanner.hasNext()) {
       String category = scanner.next();
       category = category.replace('_', ' ');
@@ -103,7 +100,7 @@ public class ClassifierTest {
         break;
       }
       float probability = scanner.nextFloat();
-      Recognition recognition = new Recognition(null, category, probability, null);
+      Classifier.Recognition recognition = new Classifier.Recognition(null, category, probability, null);
       result.add(recognition);
     }
     return result;

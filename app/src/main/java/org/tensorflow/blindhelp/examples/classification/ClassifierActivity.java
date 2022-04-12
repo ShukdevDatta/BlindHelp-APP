@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package org.tensorflow.blindhelp.examples.classification;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -26,11 +26,11 @@ import android.util.TypedValue;
 import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
-import org.tensorflow.lite.examples.classification.env.BorderedText;
-import org.tensorflow.lite.examples.classification.env.Logger;
-import org.tensorflow.lite.examples.classification.tflite.Classifier;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
+
+import org.tensorflow.blindhelp.examples.classification.env.BorderedText;
+import org.tensorflow.blindhelp.examples.classification.env.Logger;
+import org.tensorflow.blindhelp.examples.classification.tflite.Classifier;
+import org.tensorflow.lite.examples.classification.R;
 
 public class ClassifierActivity extends CameraActivity implements OnImageAvailableListener {
   private static final Logger LOGGER = new Logger();
@@ -120,19 +120,19 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
       // Defer creation until we're getting camera frames.
       return;
     }
-    final Device device = getDevice();
-    final Model model = getModel();
+    final Classifier.Device device = getDevice();
+    final Classifier.Model model = getModel();
     final int numThreads = getNumThreads();
     runInBackground(() -> recreateClassifier(model, device, numThreads));
   }
 
-  private void recreateClassifier(Model model, Device device, int numThreads) {
+  private void recreateClassifier(Classifier.Model model, Classifier.Device device, int numThreads) {
     if (classifier != null) {
       LOGGER.d("Closing classifier.");
       classifier.close();
       classifier = null;
     }
-    if (device == Device.GPU && model == Model.QUANTIZED) {
+    if (device == Classifier.Device.GPU && model == Classifier.Model.QUANTIZED) {
       LOGGER.d("Not creating classifier: GPU doesn't support quantized models.");
       runOnUiThread(
           () -> {
