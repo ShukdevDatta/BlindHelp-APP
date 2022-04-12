@@ -551,9 +551,9 @@ public abstract class CameraActivity extends AppCompatActivity
 
 
 //  Change to be made here
-boolean hun = false;
-  boolean five = false;
-  boolean ten = false;
+boolean hundred = false;
+  boolean fivehundred = false;
+  boolean thousand = false;
   @UiThread
   protected void showResultsInBottomSheet(List<Classifier.Recognition> results) {
 
@@ -566,21 +566,21 @@ boolean hun = false;
                   String.format("%.2f", (100 * recognition.getConfidence())) + "%");
         float confi = 100 * recognition.getConfidence();
         try {
-          if (!five && recognitionTextView.getText().toString().equalsIgnoreCase("500") && confi>99 ) {
-            mp2.start();
-            five =true;
-            ten = false;
-            hun = false;
-          } else if (!hun&& recognitionTextView.getText().toString().equalsIgnoreCase("100")&& confi>99) {
-            mp.start();
-            hun = true;
-            five =false;
-            ten = false;
-          } else if (!ten&&recognitionTextView.getText().toString().equalsIgnoreCase("10")&& confi>90 ) {
+          if (!fivehundred && recognitionTextView.getText().toString().equalsIgnoreCase("BDT500") && confi>99 ) {
             mp1.start();
-            ten  =true;
-            five =false;
-            hun = false;
+            fivehundred =true;
+            thousand = false;
+            hundred = false;
+          } else if (!hundred&& recognitionTextView.getText().toString().equalsIgnoreCase("BDT100")&& confi>99) {
+            mp.start();
+            hundred = true;
+            fivehundred =false;
+            thousand = false;
+          } else if (!thousand&&recognitionTextView.getText().toString().equalsIgnoreCase("BDT1000")&& confi>90 ) {
+            mp2.start();
+            thousand  =true;
+            fivehundred =false;
+            hundred = false;
           }
         }catch (Exception e){
           e.printStackTrace();
